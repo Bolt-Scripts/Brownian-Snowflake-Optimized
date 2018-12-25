@@ -3,3 +3,7 @@
 Only draw particles once and don't clear screen.
 Bonus spiderweb-like snowflake mode created by accident.</pre>
 <img src="https://thumbs.gfycat.com/SaneBelovedHerring-size_restricted.gif">
+
+<pre>
+Visualization of the spatial partitioning:</pre>
+<img src="https://thumbs.gfycat.com/NeedySlushyIberianbarbel-size_restricted.gif">

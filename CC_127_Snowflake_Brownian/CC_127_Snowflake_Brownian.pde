@@ -22,6 +22,8 @@ float particleSize = 1.5;
 int particlePosFluctuation = 5; // higher values can look cool but past like 10 it stops working
 
 float newFlakeDelayInSeconds = 0.25; //how long to pause at the end of each snowflake
+
+boolean drawBspTree = false; //also disables symetry
 //-------------------params (change these)-------------------//
 
 void setup() {
@@ -37,8 +39,9 @@ void ResetSnowflake() {
   completed = false;
   background(20);
 
-  if (bsp != null)
-    delay(int(newFlakeDelayInSeconds * 1000));
+  if (bsp != null)    
+    delay(int(newFlakeDelayInSeconds * 1000));    
+
 
   flakeRadius = maxRadius - random(0, maxRadius/3);
   bsp = new QuadTree(new Rectangle(width / 2, height / 2, width / 2, height / 2), null);
@@ -67,21 +70,25 @@ void draw() {
         count++;
       }
 
+
+
       ///draw particles with radial symetry
       for (int rot = 0; rot < 6; rot++) {
         rotate(PI/3);
-        current.show();
 
-        pushMatrix();
-        scale(1, -1);
-        current.show();
-        popMatrix();
+        if (!drawBspTree || rot == 0) {
+          current.show();
+          pushMatrix();
+          scale(1, -1);
+          current.show();
+          popMatrix();
+        }
       }
-      
+
       //insert our latest new particle int the bsp tree so new particles can check against it
       bsp.Insert(current);
-      
-      
+
+
       last = current;
 
       // If a particle doesn't move at all we're done
@@ -93,10 +100,20 @@ void draw() {
       }
     }
 
+
+
+
     if (completed && animate)
       ResetSnowflake();
 
-    if (animate || completed)
+
+    if (animate || completed) {
+      if (drawBspTree) {
+        rotate(PI/3);
+        bsp.Draw();
+      }
+
       break;
+    }
   }
 }
